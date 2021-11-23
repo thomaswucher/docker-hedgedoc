@@ -100,6 +100,7 @@ services:
       - mariadb
     volumes:
       - /path/to/config:/config
+      - /path/to/uploads:/opt/hedgedoc/public/uploads
     environment:
       - DB_HOST=mariadb
       - DB_USER=hedgedoc
@@ -133,6 +134,7 @@ docker run -d \
   -e CMD_URL_ADDPORT=true `#optional` \
   -p 3000:3000 \
   -v /path/to/appdata:/config \
+  -v /path/to/uploads:/opt/hedgedoc/public/uploads \
   --restart unless-stopped \
   lscr.io/linuxserver/hedgedoc
 ```
@@ -155,6 +157,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e CMD_DOMAIN=localhost` | The address the gui will be accessed at (ie. `192.168.1.1` or `hedgedoc.domain.com`). |
 | `-e CMD_URL_ADDPORT=true` | Set to `false` if accessing at port `80` or `443`. |
 | `-v /config` | HedgeDoc config and configurable files |
+| `-v /opt/hedgedoc/public/uploads` | Attachment uploaded to HedgeDoc Documents |
 
 ## Environment variables from files (Docker secrets)
 
@@ -220,7 +223,7 @@ Below are the instructions for updating containers:
 * Update the image: `docker pull lscr.io/linuxserver/hedgedoc`
 * Stop the running container: `docker stop hedgedoc`
 * Delete the container: `docker rm hedgedoc`
-* Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
+* Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` and `/uploads` folder and settings will be preserved)
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Watchtower auto-updater (only use if you don't remember the original parameters)
